@@ -1,0 +1,1 @@
+& C:/Users/joseb/anaconda3/python.exe c:/Users/joseb/Documents/Memoria/ecg-detector/usage_example.py
