@@ -1,11 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import math
 
 # Parámetros del modelo
-alpha = 1.0
+def alpha(x,y):
+    return 1.0 - (x**2 + y**2)**0.5
+
 omega = 0.5
 A = 0.15
-f_2 = 0.1  # Frecuencia respiratoria en Hz
+f_2 = 0.2  # Frecuencia respiratoria en Hz tomando 12 respiraciones por minuto
 
 # Valores de interés
 times = {'P': -0.2, 'Q': -0.05, 'R': 0.0, 'S': 0.05, 'T': 0.3}
@@ -19,21 +22,21 @@ def z_0(t):
 
 # Ecuaciones diferenciales
 def dx_dt(x, y):
-    return alpha * x - omega * y
+    return alpha(x,y) * x - omega * y
 
 def dy_dt(x, y):
-    return alpha * y + omega * x
+    return alpha(x,y) * y + omega * x
 
 def dz_dt(x, y, z, t):
-    theta = np.arctan2(y, x)
+    theta = math.atan2(y, x)
     dz = 0
     for event in times.keys():
         delta_theta_i = (theta - theta_values[event]) % (2 * np.pi)
         dz += a_values[event] * delta_theta_i * np.exp(-delta_theta_i**2 / (2 * b_values[event]**2))
-    return dz - (z - z_0(t))
+    return -dz - (z - z_0(t))
 
 # Parámetros de simulación
-duration = 100  # Duración en segundos
+duration = 50  # Duración en segundos
 sampling_rate = 1000  # Tasa de muestreo en Hz
 num_samples = int(duration * sampling_rate)
 time = np.linspace(0, duration, num_samples)
