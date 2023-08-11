@@ -36,7 +36,7 @@ def dz_dt(x, y, z, t):
     return -dz - (z - z_0(t))
 
 # Parámetros de simulación
-duration = 50  # Duración en segundos
+duration = 20  # Duración en segundos
 sampling_rate = 1000  # Tasa de muestreo en Hz
 num_samples = int(duration * sampling_rate)
 time = np.linspace(0, duration, num_samples)
