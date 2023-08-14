@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
+# First raw attempt
+
 # Parámetros del modelo
 def alpha(x,y):
     return 1.0 - (x**2 + y**2)**0.5
