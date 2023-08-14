@@ -1,4 +1,5 @@
 import numpy as np
+import derivsecgsyn
 from scipy.integrate import odeint
 from scipy.signal import find_peaks
 
