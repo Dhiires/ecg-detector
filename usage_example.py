@@ -8,9 +8,10 @@ import sys
 
 current_dir = pathlib.Path(__file__).resolve()
 
-example_dir = current_dir.parent/'example_data'/'ECG_s10_sitting.tsv'
+# example_dir = current_dir.parent/'example_data'/'ECG_s10_sitting.tsv'
 # example_dir = current_dir.parent/'example_data'/'ECG_artificial_reco_sett.tsv'
 # example_dir = current_dir.parent/'example_data'/'ECG_artificial_og_sett.tsv'
+example_dir = current_dir.parent/'example_data'/'ECG_artificial_og_sett2.tsv'
 
 unfiltered_ecg_dat = np.loadtxt(example_dir) 
 unfiltered_ecg = unfiltered_ecg_dat[:, 0]
@@ -64,7 +65,7 @@ heart_rate = 60.0/intervals
 plt.figure()
 plt.plot(r_ts[1:],heart_rate)
 plt.xlim(20,30)
-plt.ylim(45,75)
+plt.ylim(45,85)
 plt.title("Heart rate")
 plt.xlabel("time/sec")
 plt.ylabel("HR/BPM")
