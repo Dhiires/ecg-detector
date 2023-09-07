@@ -1,3 +1,10 @@
-ECG is from https://researchdata.gla.ac.uk/716/
-Subject 10, sitting.
+ECG_s10_sitting.tsv is from https://researchdata.gla.ac.uk/716/
+Subject 10, sitting. Sampling rate: 250 Hz. Resolution 24 bits.
 
+ECG_artificial_reco_sett.tsv is from https://www.physionet.org/content/ecgsyn/1.0.0/
+Artificially generated ECG with recommended settings
+
+ECG_artificial_reco_sett_x0.01.tsv is ECG_artificial_reco_sett.tsv multiplied by x0.01
+
+ECG_artificial_og_sett.tsv is from https://www.physionet.org/content/ecgsyn/1.0.0/
+Artificially generated ECG with minor changes to recommended settings. sfecg = 250, N = 128, hrstd = 0; sfint = 250

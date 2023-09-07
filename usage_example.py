@@ -8,7 +8,12 @@ import sys
 
 current_dir = pathlib.Path(__file__).resolve()
 
-example_dir = current_dir.parent/'example_data'/'ECG.tsv'
+# example_dir = current_dir.parent/'example_data'/'ECG_s10_sitting.tsv'
+# example_dir = current_dir.parent/'example_data'/'ECG_artificial_reco_sett.tsv'
+# example_dir = current_dir.parent/'example_data'/'ECG_artificial_reco_sett_x0.01.tsv'
+example_dir = current_dir.parent/'example_data'/'ECG_artificial_og_sett.tsv'
+
+
 unfiltered_ecg_dat = np.loadtxt(example_dir) 
 unfiltered_ecg = unfiltered_ecg_dat[:, 0]
 fs = 250
@@ -51,6 +56,7 @@ plt.figure()
 t = np.linspace(0, len(unfiltered_ecg) / fs, len(unfiltered_ecg))
 plt.plot(t, unfiltered_ecg)
 plt.plot(r_ts, unfiltered_ecg[r_peaks], 'ro')
+plt.xlim(20,40)
 plt.title("Detected R peaks")
 plt.ylabel("ECG/mV")
 plt.xlabel("time/sec")
@@ -59,6 +65,8 @@ intervals = np.diff(r_ts)
 heart_rate = 60.0/intervals
 plt.figure()
 plt.plot(r_ts[1:],heart_rate)
+plt.xlim(20,40)
+plt.ylim(50,90)
 plt.title("Heart rate")
 plt.xlabel("time/sec")
 plt.ylabel("HR/BPM")
