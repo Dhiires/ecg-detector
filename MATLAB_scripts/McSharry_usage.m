@@ -1,12 +1,12 @@
 %ecgsyn(256, 256, 0, 60, 1, 0.5, 256, [-70 -15 0 15 100], [1.2 -5 30 -7.5 0.75], [0.25 0.1 0.1 0.1 0.4])
 
-sfecg = 256;
-N = 256;
+sfecg = 250;
+N = 128;
 Anoise = 0;
 hrmean = 60;
-hrstd = 1;
+hrstd = 0;
 lfhfratio = 0.5;
-sfint = 256;
+sfint = 250;
 ti = [-70 -15 0 15 100];
 ai = [1.2 -5 30 -7.5 0.75];
 bi = [0.25 0.1 0.1 0.1 0.4];
@@ -14,13 +14,14 @@ bi = [0.25 0.1 0.1 0.1 0.4];
 [s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi);
 
 L = length(ipeaks);
-
+%%
 figure()
-plot(linspace(1,256,L),s)
+plot(linspace(1,250,L),0.01.*s)
+xlim([20 40])
 title('ECG')
 
 figure()
-plot(linspace(1,256,L),ipeaks)
+plot(linspace(1,250,L),ipeaks)
 title('PQRST')
 
 %%
@@ -31,7 +32,10 @@ for i = 1:length(s)/6
     newMatrix(i,:) = s(j:j+5);
     j = j+6;
 end
+%%
+newMatrix = [s s s s s s];
 
+%writematrix(newMatrix,'.tsv','Delimiter','\t','FileType','text');
 writematrix(newMatrix,'test_data.tsv','Delimiter','\t','FileType','text');
 %%
 
@@ -52,9 +56,7 @@ plot(linspace(1,length(matriz),length(matriz)), matriz)
 figure()
 plot(linspace(1,length(matrizDatos),length(matrizDatos)), matrizDatos(:,1))
 
-
-
-differed_data = abs(diff(matriz));
+%% differed_data = abs(diff(matriz));
 
 figure()
 plot(linspace(1,length(differed_data),length(differed_data)), differed_data)
