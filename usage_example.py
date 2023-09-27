@@ -70,3 +70,12 @@ plt.title("Heart rate")
 plt.xlabel("time/sec")
 plt.ylabel("HR/BPM")
 plt.show()
+
+with open('C:/Users/Jose/Documents/Memoria/ECG_repository/ecg-detector/r_peaks.txt','w') as file:
+    file.write('\n'.join(str(value) for value in r_peaks))
+    
+with open('C:/Users/Jose/Documents/Memoria/ECG_repository/ecg-detector/r_ts.txt','w') as file:
+    file.write('\n'.join(str(value) for value in r_ts))
+    
+with open('C:/Users/Jose/Documents/Memoria/ECG_repository/ecg-detector/non_filtered.txt','w') as file:
+    file.write('\n'.join(str(value) for value in unfiltered_ecg))
