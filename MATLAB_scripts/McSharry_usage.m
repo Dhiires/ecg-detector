@@ -1,7 +1,7 @@
 %ecgsyn(256, 256, 0, 60, 1, 0.5, 256, [-70 -15 0 15 100], [1.2 -5 30 -7.5 0.75], [0.25 0.1 0.1 0.1 0.4])
 
-sfecg = 250;
-N = 128;
+sfecg = 250; % sampling frequency of ECG
+N = 128; % number of heart beats
 Anoise = 0;
 hrmean = 60;
 hrstd = 0;
@@ -15,15 +15,27 @@ bi = [0.25 0.1 0.1 0.1 0.4];
 
 L = length(ipeaks);
 %%
+t = linspace(0,128,L);
 figure()
-plot(linspace(1,250,L),0.01.*s)
+plot(t,0.01.*s)
 xlim([20 40])
 title('ECG')
 
 figure()
-plot(linspace(1,250,L),ipeaks)
+plot(t,ipeaks)
+xlim([20 40])
 title('PQRST')
 
+%%
+pulses = zeros(L,1);
+
+for i = 1:L
+    if ipeaks(i,1) == 1
+        pulses(i,1) = i;
+    end
+end
+
+plot(t,pulses)
 %%
 newMatrix = zeros(length(s)/6,6);
 j = 1;
@@ -37,6 +49,16 @@ newMatrix = [s s s s s s];
 
 %writematrix(newMatrix,'.tsv','Delimiter','\t','FileType','text');
 writematrix(newMatrix,'test_data.tsv','Delimiter','\t','FileType','text');
+
+%% Leer archivos r_peaks r_ts
+r_peaks = readtable('r_peaks.txt','Delimiter','\t');
+r_ts = readtable('r_ts.txt','Delimiter','\t');
+
+r_peaks = table2array(r_peaks);
+r_ts = table2array(r_ts);
+
+plot(r_ts,r_peaks)
+
 %%
 
 % Leer el archivo TSV en una tabla
