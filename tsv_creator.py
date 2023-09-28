@@ -6,7 +6,7 @@ import sys
 
 current_dir = pathlib.Path(__file__).resolve()
 
-dir = current_dir.parent/'data'/'ECG_arti_og_sett.tsv'
+dir = current_dir.parent/'data'/'ECG_arti_wstd_wnoise.tsv'
 
 unfiltered_ecg_dat = np.loadtxt(dir)
 unfiltered_ecg = unfiltered_ecg_dat[:, 0]
@@ -25,4 +25,3 @@ for i in range(8):
     
     with open(path,'w') as file:
         file.write('\n'.join(str(value) for value in heart_rate))
-        
