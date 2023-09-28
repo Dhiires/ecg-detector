@@ -20,8 +20,9 @@ for i in range(8):
     
     intervals = np.diff(r_ts)
     heart_rate = 60.0/intervals
-    
+ 
     path = 'C:/Users/joseb/Documents/Memoria/ecg-detector/heart_rates/'+'HR_'+str(i)+'.txt'
     
     with open(path,'w') as file:
-        file.write('\n'.join(str(value) for value in unfiltered_ecg))
+        file.write('\n'.join(str(value) for value in heart_rate))
+        
