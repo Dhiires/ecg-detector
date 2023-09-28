@@ -10,8 +10,8 @@ current_dir = pathlib.Path(__file__).resolve()
 
 # example_dir = current_dir.parent/'example_data'/'ECG_s10_sitting.tsv'
 # example_dir = current_dir.parent/'example_data'/'ECG_artificial_reco_sett.tsv'
-# example_dir = current_dir.parent/'example_data'/'ECG_artificial_og_sett.tsv'
-example_dir = current_dir.parent/'example_data'/'ECG_artificial_og_sett2.tsv'
+example_dir = current_dir.parent/'example_data'/'ECG_artificial_og_sett.tsv'
+# example_dir = current_dir.parent/'example_data'/'ECG_artificial_og_sett2.tsv'
 
 unfiltered_ecg_dat = np.loadtxt(example_dir) 
 unfiltered_ecg = unfiltered_ecg_dat[:, 0]
@@ -71,11 +71,11 @@ plt.xlabel("time/sec")
 plt.ylabel("HR/BPM")
 plt.show()
 
-with open('C:/Users/Jose/Documents/Memoria/ECG_repository/ecg-detector/r_peaks.txt','w') as file:
-    file.write('\n'.join(str(value) for value in r_peaks))
+# with open('C:/Users/Jose/Documents/Memoria/ECG_repository/ecg-detector/r_peaks.txt','w') as file:
+#     file.write('\n'.join(str(value) for value in r_peaks))
     
-with open('C:/Users/Jose/Documents/Memoria/ECG_repository/ecg-detector/r_ts.txt','w') as file:
-    file.write('\n'.join(str(value) for value in r_ts))
+# with open('C:/Users/Jose/Documents/Memoria/ECG_repository/ecg-detector/r_ts.txt','w') as file:
+#     file.write('\n'.join(str(value) for value in r_ts))
     
-with open('C:/Users/Jose/Documents/Memoria/ECG_repository/ecg-detector/non_filtered.txt','w') as file:
-    file.write('\n'.join(str(value) for value in unfiltered_ecg))
+# with open('C:/Users/Jose/Documents/Memoria/ECG_repository/ecg-detector/non_filtered.txt','w') as file:
+#     file.write('\n'.join(str(value) for value in unfiltered_ecg))
