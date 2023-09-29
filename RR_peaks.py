@@ -6,10 +6,10 @@ import sys
 
 current_dir = pathlib.Path(__file__).resolve()
 
-dir = current_dir.parent/'data'/'ECG_arti_nostd_nonoise_60.tsv'
+# dir = current_dir.parent/'data'/'ECG_arti_nostd_nonoise_60.tsv'
 # dir = current_dir.parent/'data'/'ECG_arti_wstd_nonoise_60.tsv'
 # dir = current_dir.parent/'data'/'ECG_arti_nostd_wnoise_60.tsv'
-# dir = current_dir.parent/'data'/'ECG_arti_wstd_wnoise_60.tsv'
+dir = current_dir.parent/'data'/'ECG_arti_wstd_wnoise_60.tsv'
 # dir = current_dir.parent/'data'/'ECG_arti_nostd_nonoise_120.tsv'
 # dir = current_dir.parent/'data'/'ECG_arti_wstd_nonoise_120.tsv'
 # dir = current_dir.parent/'data'/'ECG_arti_nostd_wnoise_120.tsv'
@@ -27,7 +27,7 @@ for i in range(8):
     
     intervals = np.diff(r_ts)
  
-    path = 'C:/Users/joseb/Documents/Memoria/ecg-detector/RR_peaks/'+'RR_'+str(i)+'.txt'
+    path = 'C:/Users/joseb/Documents/Memoria/ecg-detector/RR_peaks_w_w_60/'+'RR_'+str(i)+'.txt'
     
     with open(path,'w') as file:
         file.write('\n'.join(str(value) for value in intervals))
