@@ -69,4 +69,17 @@ b.FaceColor = "flat";
 b.CData(1,:) = [.5 0 .5];
 title('Promedio Intervalos RR std = 1, noise = 0, HR = 120')
 
+%% RR standard deviation
+
+true_SDNN = std(intervals);
+RR_buffer_SDNN = std(RR_buffer);
+
+names = categorical({'True HR','Two Average','Matched Filter','SWT','Engzee','Christov','Hamilton','Pan Tompkins','WQRS'});
+names = reordercats(names,{'True HR','Two Average','Matched Filter','SWT','Engzee','Christov','Hamilton','Pan Tompkins','WQRS'});
+
+figure()
+b = bar(names,[true_RR_mean RR_buffer_mean]);
+b.FaceColor = "flat";
+b.CData(1,:) = [.5 0 .5];
+title('Desviación Estándar Intervalos RR std = 1, noise = 0, HR = 120')
 %% %heart_rate = 60.*intervals/sfecg;
