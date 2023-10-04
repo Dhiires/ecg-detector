@@ -1,4 +1,16 @@
-% Borrador de cositas
+%% Borrador de cositas
+
+%% Plot testing
+
+figure()
+plot(t,s)
+xlim([20 40])
+title('ECG')
+
+figure()
+plot(t,ipeaks)
+xlim([20 40])
+title('PQRST')
 
 %% Recommended settings
 %ecgsyn(256, 256, 0, 60, 1, 0.5, 256, [-70 -15 0 15 100], [1.2 -5 30 -7.5 0.75], [0.25 0.1 0.1 0.1 0.4])
@@ -57,15 +69,3 @@ plot(linspace(1,length(differed_data),length(differed_data)), differed_data)
 figure()
 plot(tp,heart_rate)
 ylim([45 85])
-
-%% Plot testing
-
-figure()
-plot(t,s)
-xlim([20 40])
-title('ECG')
-
-figure()
-plot(t,ipeaks)
-xlim([20 40])
-title('PQRST')
