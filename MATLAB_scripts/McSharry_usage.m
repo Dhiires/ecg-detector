@@ -1,4 +1,5 @@
 %% No standard deviation, no added noise
+clear
 sfecg = 250;
 N = 128;
 Anoise = 0;
@@ -13,6 +14,7 @@ bi = [0.25 0.1 0.1 0.1 0.4];
 [s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi);
 
 %% No standard deviation, added noise
+clear
 sfecg = 250;
 N = 128;
 Anoise = 0.1;
@@ -27,6 +29,7 @@ bi = [0.25 0.1 0.1 0.1 0.4];
 [s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi);
 
 %% with standard deviation, no noise
+clear
 sfecg = 250;
 N = 128;
 Anoise = 0;
@@ -41,6 +44,7 @@ bi = [0.25 0.1 0.1 0.1 0.4];
 [s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi);
 
 %% with standard deviation, with noise
+clear
 sfecg = 250;
 N = 128;
 Anoise = 0.1;
@@ -63,7 +67,6 @@ for i = 1:length(s)/6
     j = j+6;
 end
 
-%%
 newMatrix = [s s s s s s];
 
 %writematrix(newMatrix,'.tsv','Delimiter','\t','FileType','text');
