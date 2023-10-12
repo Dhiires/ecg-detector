@@ -1,43 +1,6 @@
-%% Ground Truth
-L = length(ipeaks);
-t = linspace(0,N,L);
-tp = linspace(0,N,N);
-pre_intervals = zeros(N+1,1);
-pulses = zeros(L,1);
-c = 0;
-j = 1;
-for i = 1:L
-    if ipeaks(i,1) == 1
-        pre_intervals(j,1) = i;
-        j = j+1;
-        c = c+1;
-    end
-end
+%% Borrador de cositas
 
-intervals = diff(pre_intervals)/sfecg;
-
-RR0 = zeros(N,1);
-RR1 = zeros(N,1);
-RR2 = zeros(N,1);
-RR3 = zeros(N,1);
-RR4 = zeros(N,1);
-RR5 = zeros(N,1);
-RR6 = zeros(N,1);
-RR7 = zeros(N,1);
-
-RR_buffer = [RR0 RR1 RR2 RR3 RR4 RR5 RR6 RR7];
-
-% Leer archivos RR_peaks
-
-str_1 = 'RR_peaks/RR_peaks_w_no_120/RR_';
-
-for i = 0:7
-    path = strcat(str_1,string(i),'.txt');
-    aux = readtable(path,'Delimiter','\t');
-    aux = table2array(aux);
-    aux_L = length(aux);
-    RR_buffer(1:aux_L,i+1) = aux;
-end
+%% testing
 
 %% Plotting RR intervals
 
@@ -56,30 +19,72 @@ hold off
 xlim([5 30])
 legend('True HR','Two Average','Matched Filter','SWT','Engzee','Christov','Hamilton','Pan Tompkins','WQRS')
 
-%% RR mean 
-
-true_RR_mean = mean(intervals);
-RR_buffer_mean = mean(RR_buffer);
-names = categorical({'True HR','Two Average','Matched Filter','SWT','Engzee','Christov','Hamilton','Pan Tompkins','WQRS'});
-names = reordercats(names,{'True HR','Two Average','Matched Filter','SWT','Engzee','Christov','Hamilton','Pan Tompkins','WQRS'});
+%% Plot testing
 
 figure()
-b = bar(names,[true_RR_mean RR_buffer_mean]);
-b.FaceColor = "flat";
-b.CData(1,:) = [.5 0 .5];
-title('Promedio Intervalos RR std = 1, noise = 0, HR = 120')
-
-%% RR standard deviation
-
-true_SDNN = std(intervals);
-RR_buffer_SDNN = std(RR_buffer);
-
-names = categorical({'True HR','Two Average','Matched Filter','SWT','Engzee','Christov','Hamilton','Pan Tompkins','WQRS'});
-names = reordercats(names,{'True HR','Two Average','Matched Filter','SWT','Engzee','Christov','Hamilton','Pan Tompkins','WQRS'});
+plot(t,s)
+xlim([20 40])
+title('ECG')
 
 figure()
-b = bar(names,[true_RR_mean RR_buffer_mean]);
-b.FaceColor = "flat";
-b.CData(1,:) = [.5 0 .5];
-title('Desviación Estándar Intervalos RR std = 1, noise = 0, HR = 120')
-%% %heart_rate = 60.*intervals/sfecg;
+plot(t,ipeaks)
+xlim([20 40])
+title('PQRST')
+
+%% Recommended settings
+%ecgsyn(256, 256, 0, 60, 1, 0.5, 256, [-70 -15 0 15 100], [1.2 -5 30 -7.5 0.75], [0.25 0.1 0.1 0.1 0.4])
+sfecg = 256;
+N = 256;
+Anoise = 0;
+hrmean = 60;
+hrstd = 1;
+lfhfratio = 0.5;
+sfint = 256;
+ti = [-70 -15 0 15 100];
+ai = [1.2 -5 30 -7.5 0.75];
+bi = [0.25 0.1 0.1 0.1 0.4];
+
+[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi);
+%% Recommended settings less pulses
+%ecgsyn(256, 256, 0, 60, 1, 0.5, 256, [-70 -15 0 15 100], [1.2 -5 30 -7.5 0.75], [0.25 0.1 0.1 0.1 0.4])
+sfecg = 256;
+N = 128;
+Anoise = 0;
+hrmean = 60;
+hrstd = 1;
+lfhfratio = 0.5;
+sfint = 256;
+ti = [-70 -15 0 15 100];
+ai = [1.2 -5 30 -7.5 0.75];
+bi = [0.25 0.1 0.1 0.1 0.4];
+
+[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi);
+
+%%
+
+% Leer el archivo TSV en una tabla
+tablaDatos = readtable('ECG.tsv', 'FileType','text','Delimiter',{'\t', ' '}, 'MultipleDelimsAsOne', true);
+
+% Convertir la tabla a una matriz numérica
+matrizDatos = table2array(tablaDatos);
+
+% Ahora la variable matrizDatos contiene tus datos numéricos
+% disp(matrizDatos);
+
+matriz = [matrizDatos(:,1);matrizDatos(:,2);matrizDatos(:,3);matrizDatos(:,4);matrizDatos(:,5);matrizDatos(:,6)];
+
+figure()
+plot(linspace(1,length(matriz),length(matriz)), matriz)
+
+figure()
+plot(linspace(1,length(matrizDatos),length(matrizDatos)), matrizDatos(:,1))
+
+%% differed_data = abs(diff(matriz));
+
+figure()
+plot(linspace(1,length(differed_data),length(differed_data)), differed_data)
+
+%%
+figure()
+plot(tp,heart_rate)
+ylim([45 85])

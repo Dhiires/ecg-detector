@@ -1,5 +1,24 @@
 %% Borrador de cositas
 
+%% testing
+
+%% Plotting RR intervals
+
+figure()
+plot(tp,intervals,'LineWidth',3)
+hold on
+plot(RR_buffer(:,1))
+plot(RR_buffer(:,2))
+plot(RR_buffer(:,3))
+plot(RR_buffer(:,4))
+plot(RR_buffer(:,5))
+plot(RR_buffer(:,6))
+plot(RR_buffer(:,7))
+plot(RR_buffer(:,8))
+hold off
+xlim([5 30])
+legend('True HR','Two Average','Matched Filter','SWT','Engzee','Christov','Hamilton','Pan Tompkins','WQRS')
+
 %% Plot testing
 
 figure()

@@ -3,7 +3,7 @@ clear
 sfecg = 250;
 N = 128;
 Anoise = 0;
-hrmean = 120;
+hrmean = 60;
 hrstd = 0;
 lfhfratio = 0.5;
 sfint = 250;
@@ -18,7 +18,7 @@ clear
 sfecg = 250;
 N = 128;
 Anoise = 0.1;
-hrmean = 120;
+hrmean = 60;
 hrstd = 0;
 lfhfratio = 0.5;
 sfint = 250;
@@ -33,7 +33,7 @@ clear
 sfecg = 250;
 N = 128;
 Anoise = 0;
-hrmean = 120;
+hrmean = 60;
 hrstd = 1;
 lfhfratio = 0.5;
 sfint = 250;
@@ -48,7 +48,7 @@ clear
 sfecg = 250;
 N = 128;
 Anoise = 0.1;
-hrmean = 120;
+hrmean = 60;
 hrstd = 1;
 lfhfratio = 0.5;
 sfint = 250;
