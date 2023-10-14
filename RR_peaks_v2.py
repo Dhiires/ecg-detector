@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pathlib
 from ecgdetectors import Detectors
-import sys
 import os
 
 current_dir = pathlib.Path(__file__).resolve()
