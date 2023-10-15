@@ -1,39 +1,57 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import pathlib
 from ecgdetectors import Detectors
-import sys
 import os
 
+########################### INIT FUNCTIONS #########################
+
+def SplitParts(ecg_file_name):
+    parts = ecg_file_name.rsplit('.',1) # "ECG_hrstd_Anoise_hrmean.tsv"
+    print(parts)
+    parts = parts[0] # "ECG_hrstd_Anoise_hrmean", "tsv"
+    parts = parts.split('_') # "ECG", "hrstd", "Anoise", "hrmean"
+    hrstd, Anoise, hrmean = parts[1], parts[2], parts[3]
+    return hrstd, Anoise, hrmean
+
+########################### END FUNCTIONS ###########################
+
 current_dir = pathlib.Path(__file__).resolve()
+data_dir = current_dir.parent / 'data'
 
-# 'ECG_hrstd_Anoise_hrmean.tsv'
-# 'RR_peaks/RR_hrstd_Anoise_hrmean/RR_'
+with open(data_dir / 'files_names.txt', 'r') as files_names_file:
+    for line in files_names_file:
+        ecg_file_name = line.strip()
+        if ecg_file_name == "init":
+            print("Reading files_names.txt ...")
+            continue
+        hrstd, Anoise, hrmean = SplitParts(ecg_file_name)
+        
+        print(ecg_file_name)
+        ecg_file_path = data_dir / ecg_file_name
+        unfiltered_ecg_dat = np.loadtxt(ecg_file_path)
+        unfiltered_ecg = unfiltered_ecg_dat[:, 0]
+        
+        fs = 250
+        detectors = Detectors(fs)
+        
+        for i in range(8):
+            r_peaks = detectors.get_detector_list()[i][1](unfiltered_ecg)
+            r_ts = np.array(r_peaks) / fs
+            
+            intervals = np.diff(r_ts)
+            
+            pre_folder_path = current_dir.parent / 'RR_intervals' 
+            specific_folder_path = 'RR_' + str(hrstd) + '_' + str(Anoise) + '_' + str(hrmean)
+            rr_folder_path = pre_folder_path / specific_folder_path
+            
+            if not os.path.exists(rr_folder_path):
+                os.makedirs(rr_folder_path)
+            
+            rr_file_name = 'RR_' + str(i) + '.txt'
+            rr_file_path = rr_folder_path / rr_file_name
+            
+            with open(rr_file_path, 'w') as file:
+                file.write('\n'.join(str(value) for value in intervals))
+        
+    print("Reading finished!")
 
-hrstd = 1
-Anoise = 1
-hrmean = 60
-
-dir  = current_dir.parent/'data'/'ECG_'+str(hrstd)+'_'+str(Anoise)+'_'+str(hrmean)+'.tsv'
-
-unfiltered_ecg_dat = np.loadtxt(dir)
-unfiltered_ecg = unfiltered_ecg_dat[:, 0]
-fs = 250
-
-detectors = Detectors(fs)
-
-for i in range(8):
-    r_peaks = detectors.get_detector_list()[i][1](unfiltered_ecg)
-    r_ts = np.array(r_peaks) / fs
-    
-    intervals = np.diff(r_ts)
-    
-    folder_path = 'C:/Users/joseb/Documents/Memoria/ecg-detector/RR_'+str(hrstd)+'_'+str(Anoise)+'_'+str(hrmean)
-    
-    if not os.path.exists(folder_path):
-        os.makedirs(folder_path)
-    
-    path = os.path.join(folder_path, 'RR_' + str(i) + '.txt')
-    
-    with open(path,'w') as file:
-        file.write('\n'.join(str(value) for value in intervals))
