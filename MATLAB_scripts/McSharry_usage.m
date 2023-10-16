@@ -11,7 +11,7 @@ ti = [-70 -15 0 15 100];
 ai = [1.2 -5 30 -7.5 0.75];
 bi = [0.25 0.1 0.1 0.1 0.4];
 
-[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi);
+[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi); s; ipeaks;
 
 %% No standard deviation, added noise
 clear
@@ -26,7 +26,7 @@ ti = [-70 -15 0 15 100];
 ai = [1.2 -5 30 -7.5 0.75];
 bi = [0.25 0.1 0.1 0.1 0.4];
 
-[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi);
+[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi); s; ipeaks;
 
 %% with standard deviation, no noise
 clear
@@ -41,7 +41,7 @@ ti = [-70 -15 0 15 100];
 ai = [1.2 -5 30 -7.5 0.75];
 bi = [0.25 0.1 0.1 0.1 0.4];
 
-[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi);
+[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi); s; ipeaks;
 
 %% with standard deviation, with noise
 clear
@@ -56,7 +56,7 @@ ti = [-70 -15 0 15 100];
 ai = [1.2 -5 30 -7.5 0.75];
 bi = [0.25 0.1 0.1 0.1 0.4];
 
-[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi);
+[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi); s; ipeaks;
 
 %% FILE CREATION
 newMatrix = zeros(length(s)/8,6);
