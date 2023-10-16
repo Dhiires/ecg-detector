@@ -1,7 +1,13 @@
 %% Borrador de cositas
 
 %% testing
-
+ for j = 1:bins-2
+    for i = 1:length(intervals)
+        if intervals(i) >= max_v-0.002*j
+            histo(1,bins-j-1) = histo(1,bins-j-1) + 1;
+        end
+    end
+ end
 %% Plotting RR intervals
 
 figure()
