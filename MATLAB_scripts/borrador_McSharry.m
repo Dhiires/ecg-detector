@@ -50,7 +50,7 @@ ti = [-70 -15 0 15 100];
 ai = [1.2 -5 30 -7.5 0.75];
 bi = [0.25 0.1 0.1 0.1 0.4];
 
-[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi);
+[~, ~] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi);
 %% Recommended settings less pulses
 %ecgsyn(256, 256, 0, 60, 1, 0.5, 256, [-70 -15 0 15 100], [1.2 -5 30 -7.5 0.75], [0.25 0.1 0.1 0.1 0.4])
 sfecg = 256;
