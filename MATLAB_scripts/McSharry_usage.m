@@ -1,87 +1,51 @@
-%% No standard deviation, no added noise
-clear
+%% Parámetros ECG
+clear, clc
+STD = [0 0.1 0.25 0.5 1 2 3 4 5];
+NOISE = [0 0.1 0.25 0.5 0.75 1 1.25 1.5 2 3];
+HRS = linspace(40,180,15);
 sfecg = 250;
 N = 128;
-Anoise = 0;
-hrmean = HR;
-hrstd = 0;
 lfhfratio = 0.5;
 sfint = 250;
 ti = [-70 -15 0 15 100];
 ai = [1.2 -5 30 -7.5 0.75];
 bi = [0.25 0.1 0.1 0.1 0.4];
 
-[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi); s; ipeaks;
+%% Usage
 
-%% No standard deviation, added noise
-clear
-sfecg = 250;
-N = 128;
-Anoise = 0.1;
-hrmean = HR;
-hrstd = 0;
-lfhfratio = 0.5;
-sfint = 250;
-ti = [-70 -15 0 15 100];
-ai = [1.2 -5 30 -7.5 0.75];
-bi = [0.25 0.1 0.1 0.1 0.4];
-
-[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi); s; ipeaks;
-
-%% with standard deviation, no noise
-clear
-sfecg = 250;
-N = 128;
-Anoise = 0;
-hrmean = HR;
-hrstd = 1;
-lfhfratio = 0.5;
-sfint = 250;
-ti = [-70 -15 0 15 100];
-ai = [1.2 -5 30 -7.5 0.75];
-bi = [0.25 0.1 0.1 0.1 0.4];
-
-[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi); s; ipeaks;
-
-%% with standard deviation, with noise
-clear
-sfecg = 250;
-N = 128;
-Anoise = 0.1;
-hrmean = HR;
-hrstd = 2;
-lfhfratio = 0.5;
-sfint = 250;
-ti = [-70 -15 0 15 100];
-ai = [1.2 -5 30 -7.5 0.75];
-bi = [0.25 0.1 0.1 0.1 0.4];
-
-[s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi); s; ipeaks;
-
-%% FILE CREATION
-newMatrix = zeros(length(s)/8,6);
-j = 1;
-
-for i = 1:length(s)/6
-    newMatrix(i,:) = s(j:j+5);
-    j = j+6;
+NO_HRSTD = 0;
+for j = 1:length(NOISE)
+    for k = 1:length(HRS)
+        [s, ipeaks] = ecgsyn(sfecg,N,NOISE(j),HRS(k),NO_HRSTD,lfhfratio,sfint,ti,ai,bi);
+        file_name = create_tsv(s,NO_HRSTD,NOISE(j),HRS(k));
+        save_file_name(file_name);
+    end
 end
 
-newMatrix = [s s s s s s];
-% 'ECG_hrstd_Anoise_hrmean.tsv'
-file_name = 'ECG\ECG_'+string(hrstd)+'_'+string(Anoise)+'_'+string(hrmean)+'.tsv';
-writematrix(newMatrix,file_name,'Delimiter','\t','FileType','text');
+NO_NOISE = 0;
+for i = 1:length(STD)
+    for k = 1:length(HRS)
+        [s, ipeaks] = ecgsyn(sfecg,N,NO_NOISE,HRS(k),STD(i),lfhfratio,sfint,ti,ai,bi);
+        file_name = create_tsv(s,STD(i),NO_NOISE,HRS(k));
+        save_file_name(file_name);
+    end
+end
 
-%% file names saving
+%% FUNCTIONS
 
-files = readlines("files_names.txt");
-files = [files; file_name];
-fid = fopen("files_names.txt","w");
-fprintf(fid, '%s\n', files(1:end-1));
-fprintf(fid,'%s',files(end));
+% ECG FILE CREATION
+function f_name = create_tsv(ecg, hrstd, Anoise, hrmean)
+    newMatrix = [ecg ecg ecg ecg ecg ecg];
+    % 'ECG_hrstd_Anoise_hrmean.tsv'
+    f_name = 'ECG\ECG_'+string(hrstd)+'_'+string(Anoise)+'_'+string(hrmean)+'.tsv';
+    writematrix(newMatrix,f_name,'Delimiter','\t','FileType','text');
+end
 
-%% FUNCTION
-
-function hr = HR
-    hr = 60;
+% SAVE FILE NAME TO .TXT
+function save_file_name(f_name)
+    files = readlines("files_names.txt");
+    files = [files; f_name];
+    fid = fopen("files_names.txt","w");
+    fprintf(fid, '%s\n', files(1:end-1));
+    fprintf(fid,'%s',files(end));
 end
