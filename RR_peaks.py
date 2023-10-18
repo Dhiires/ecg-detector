@@ -54,4 +54,3 @@ with open(data_dir / 'files_names.txt', 'r') as files_names_file:
                 file.write('\n'.join(str(value) for value in intervals))
         
     print("Reading finished!")
-
