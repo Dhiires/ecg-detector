@@ -15,6 +15,7 @@ bi = [0.25 0.1 0.1 0.1 0.4];
 
 NO_HRSTD = 0;
 for j = 1:length(NOISE)
+    true_RR = zeros(N,15);
     for k = 1:length(HRS)
         [s, ipeaks] = ecgsyn(sfecg,N,NOISE(j),HRS(k),NO_HRSTD,lfhfratio,sfint,ti,ai,bi);
         file_name = create_tsv(s,NO_HRSTD,NOISE(j),HRS(k));

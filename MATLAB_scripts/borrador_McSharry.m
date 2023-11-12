@@ -1,7 +1,84 @@
 %% Borrador de cositas
 
 %% testing
- 
+
+%%
+for j = 1:15
+    for k = 1:9
+            error_table.Metodo(k+i-1) = tableNames(k);
+            error_table.HR(k+i-1) = heart_rates(j);
+
+            error_table.Promedio(k+i-1)     = Prom_error(k);
+            error_table.Desviacion(k+i-1)   = Desv_error(k);
+            error_table.RMSSD(k+i-1)        = RMSS_error(k);
+            error_table.PNN50(k+i-1)        = PNN5_error(k);
+            error_table.TRINDEX(k+i-1)      = TRIN_error(k);
+            error_table.TINN(k+i-1)         = TINN_error(k);
+    end
+end
+
+%% 
+    [RRmean, RRstd, rmssd, pnn50_0, trindex, tinn] = TimeDomainHRV(true_RR);
+    [RRmean1, RRstd1, rmssd1, pnn50_1, trindex1, tinn1] = TimeDomainHRV(RR_1);
+    [RRmean2, RRstd2, rmssd2, pnn50_2, trindex2, tinn2] = TimeDomainHRV(RR_2);
+    [RRmean3, RRstd3, rmssd3, pnn50_3, trindex3, tinn3] = TimeDomainHRV(RR_3);
+    [RRmean4, RRstd4, rmssd4, pnn50_4, trindex4, tinn4] = TimeDomainHRV(RR_4);
+    [RRmean5, RRstd5, rmssd5, pnn50_5, trindex5, tinn5] = TimeDomainHRV(RR_5);
+    [RRmean6, RRstd6, rmssd6, pnn50_6, trindex6, tinn6] = TimeDomainHRV(RR_6);
+    [RRmean7, RRstd7, rmssd7, pnn50_7, trindex7, tinn7] = TimeDomainHRV(RR_7);
+    [RRmean8, RRstd8, rmssd8, pnn50_8, trindex8, tinn8] = TimeDomainHRV(RR_8);
+    
+    metric_mean = CompileMetrics(RRmean,RRmean1,RRmean2,RRmean3,RRmean4,RRmean5,RRmean6,RRmean7,RRmean8);
+
+%%
+aux = zeros(1,3);
+help = 0;
+for i = 123:137 %3:length(list)
+
+file_name = list(i).name;
+file_name_parts = split(file_name,'_');
+aux = str2double([file_name_parts(2),file_name_parts(3),file_name_parts(4)]);
+file_std = aux(1); file_noise = aux(2); file_hr = aux(3);
+
+[~, ipeaks] = ecgsyn(sfecg,N,file_noise,file_hr,file_std,lfhfratio,sfint,ti,ai,bi);
+true_RR = GroundTruth(ipeaks,N,sfecg);
+
+[RR_1, RR_2, RR_3, RR_4, RR_5, RR_6, RR_7, RR_8] = READFILE(file_std,file_noise,file_hr);
+% En este punto se tiene el trueRR y los RR por archivo de la carpeta
+% actual de la iteración, el problema es que no se recorren en orden
+% ascendente de HR
+
+% Luego deberían ir una función de todas las metricas HRV
+
+RR_mean_metrics = GetRRmean(true_RR, RR_1, RR_2, RR_3, RR_4, RR_5, RR_6, RR_7, RR_8);
+RR_mean_err = GetError(RR_mean_metrics);
+
+for j = help+1:help+9
+    table1.Metodo(j) = tableNames(j-help);
+    table1.HR(j) = heart_rates(i-122);
+    table1.error(j) = RR_mean_err(j-help);
+end
+help = help+9;
+
+end
+
+%%    
+%hr_string = " HR = " + string(file_hr) + ", ";
+%std_string = "STD = " + string(file_std) + ", ";
+%noise_string = "NOISE = " + string(file_noise);
+%
+%figure
+%scatter(RR_mean_metrics,names)
+%hold on
+%errorbar(RR_mean_metrics,names,RR_mean_err, 'horizontal', 'LineStyle','none');
+%hold off
+%title(strcat(stat_string,hr_string,std_string,noise_string))
+
+%% STRINGS
+hr = " HR = " + string(hrmean) + ", ";
+std = "STD = " + string(hrstd) + ", ";
+noise = "NOISE = " + string(Anoise);
+
 %% No standard deviation, no added noise
 clear
 sfecg = 250;
@@ -46,8 +123,8 @@ ai = [1.2 -5 30 -7.5 0.75];
 bi = [0.25 0.1 0.1 0.1 0.4];
 
 [s, ipeaks] = ecgsyn(sfecg,N,Anoise,hrmean,hrstd,lfhfratio,sfint,ti,ai,bi);
- 
- %% Plotting RR intervals
+
+%% Plotting RR intervals
 
 figure()
 plot(tp,intervals,'LineWidth',3)
@@ -62,6 +139,21 @@ plot(RR_buffer(:,7))
 plot(RR_buffer(:,8))
 hold off
 xlim([5 30])
+legend('True HR','Two Average','Matched Filter','SWT','Engzee','Christov','Hamilton','Pan Tompkins','WQRS')
+
+%%
+figure
+plot(true_RR)
+hold on
+plot(RR_1)
+plot(RR_2)
+plot(RR_3)
+plot(RR_4)
+plot(RR_5)
+plot(RR_6)
+plot(RR_7)
+plot(RR_8)
+hold off
 legend('True HR','Two Average','Matched Filter','SWT','Engzee','Christov','Hamilton','Pan Tompkins','WQRS')
 
 %% Plot testing
