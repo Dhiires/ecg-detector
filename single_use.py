@@ -1,8 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import pathlib
-from ecgdetectors import Detectors
-import sys
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 import os
