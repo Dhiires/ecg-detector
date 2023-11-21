@@ -10,7 +10,7 @@ current_dir = pathlib.Path(__file__).resolve()
 
 # example_dir = current_dir.parent/'example_data'/'ECG_s10_sitting.tsv'
 # example_dir = current_dir.parent/'example_data'/'ECG_artificial_reco_sett.tsv'
-example_dir = current_dir.parent/'example_data'/'ECG_artificial_og_sett.tsv'
+example_dir = current_dir.parent/'data'/'ECG_0_0_100.tsv'
 # example_dir = current_dir.parent/'example_data'/'ECG_artificial_og_sett2.tsv'
 
 unfiltered_ecg_dat = np.loadtxt(example_dir) 
