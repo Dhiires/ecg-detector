@@ -30,7 +30,7 @@ def RunMethods(file_path, experiment, subject):
         
         with open(rr_file_path, 'w') as file:
             file.write('\n'.join(str(value) for value in intervals))
-
+            
     return
 
 ########################## END FUNCTIONS ##########################
@@ -48,34 +48,11 @@ for subject in current_list:
     
     sub_list = os.listdir(data_dir / subject)
     for experiment in sub_list:
-        ecg_file_path = data_dir / subject / experiment
+        display_string = 'Experiment ' + experiment
+        print(display_string)
         
-        fs = 250
-        detectors = Detectors(fs)
-
-        unfiltered_ecg_dat = np.loadtxt(ecg_file_path)
-        unfiltered_ecg = unfiltered_ecg_dat[:,0]
-
-        for i in range(8):
-            r_peaks = detectors.get_detector_list()[i][1](unfiltered_ecg)
-            r_ts = np.array(r_peaks) / fs
-
-            intervals = np.diff(r_ts)
-
-            pre_folder_path = current_dir.parent / 'DB_RR_intervals'
-            specific_folder_path = 'RR_' + experiment + '_' + subject
-            rr_folder_path = pre_folder_path / specific_folder_path
-
-            if not os.path.exists(rr_folder_path):
-                os.makedirs(rr_folder_path)
-
-            rr_file_name = 'RR_' + str(i) + '.txt'
-            rr_file_path = rr_folder_path / rr_file_name
-
-            with open(rr_file_path, 'w') as file:
-                file.write('\n'.join(str(value) for value in intervals))
-    
-    display_string = 'Experiment ' + experiment
-    print(display_string)
+        ecg_file_path = data_dir / subject / experiment / 'ECG.tsv'
+        
+        RunMethods(ecg_file_path,experiment,subject)
     
 print("Finished")
