@@ -16,7 +16,7 @@ def SplitParts(ecg_file_name):
 ########################### END FUNCTIONS ###########################
 
 current_dir = pathlib.Path(__file__).resolve()
-data_dir = current_dir.parent / 'data'
+data_dir = current_dir.parent / 'data2'
 
 with open(data_dir / 'files_names.txt', 'r') as files_names_file:
     for line in files_names_file:
