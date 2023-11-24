@@ -40,7 +40,7 @@ with open(data_dir / 'files_names.txt', 'r') as files_names_file:
             
             intervals = np.diff(r_ts)
             
-            pre_folder_path = current_dir.parent / 'RR_intervals' 
+            pre_folder_path = current_dir.parent / 'RR_intervals2' 
             specific_folder_path = 'RR_' + str(hrstd) + '_' + str(Anoise) + '_' + str(hrmean)
             rr_folder_path = pre_folder_path / specific_folder_path
             
