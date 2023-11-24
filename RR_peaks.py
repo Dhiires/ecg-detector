@@ -18,11 +18,11 @@ def SplitParts(ecg_file_name):
 current_dir = pathlib.Path(__file__).resolve()
 data_dir = current_dir.parent / 'data2'
 
-with open(data_dir / 'files_names.txt', 'r') as files_names_file:
+with open(data_dir / 'files_names2.txt', 'r') as files_names_file:
     for line in files_names_file:
         ecg_file_name = line.strip()
         if ecg_file_name == "init":
-            print("Reading files_names.txt ...")
+            print("Reading files_names2.txt ...")
             continue
         hrstd, Anoise, hrmean = SplitParts(ecg_file_name)
         
