@@ -2,6 +2,7 @@ import numpy as np
 import pathlib
 from ecgdetectors import Detectors
 import os
+import shutil
 
 ########################## INIT FUNCTIONS ##########################
 
@@ -31,7 +32,7 @@ def RunMethods(file_path, experiment, subject):
         with open(rr_file_path, 'w') as file:
             file.write('\n'.join(str(value) for value in intervals))
             
-    return
+    return rr_folder_path
 
 ########################## END FUNCTIONS ##########################
 
@@ -52,7 +53,17 @@ for subject in current_list:
         print(display_string)
         
         ecg_file_path = data_dir / subject / experiment / 'ECG.tsv'
+
+        rr_folder_path = RunMethods(ecg_file_path,experiment,subject)
         
-        RunMethods(ecg_file_path,experiment,subject)
+        current_annotation = data_dir / subject / experiment / 'annotation_cs.tsv'
+        annotation_file_name = 'annotation_' + experiment + '_' + subject + '.txt'
+        annotation_cs_path = rr_folder_path / annotation_file_name
+        
+        if not os.path.exists(current_annotation):
+            with open(annotation_cs_path, 'w') as file:
+                file.write("file not found")
+        else:
+            shutil.copyfile(current_annotation,annotation_cs_path)
     
 print("Finished")
