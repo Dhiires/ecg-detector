@@ -17,11 +17,19 @@ unfiltered_ecg = unfiltered_ecg_dat[:, 0]
 
 fs = 250
 
+title = "ECG Real Sujeto Caminando"
+
 plt.figure()
 t = np.linspace(0, len(unfiltered_ecg) / fs, len(unfiltered_ecg))
 plt.plot(t,unfiltered_ecg)
 plt.xlim(20,30)
-plt.title("ECG Sintético Ruido Añadido 0.75 mV")
+plt.title(title)
+plt.ylabel("ECG (mV)")
+plt.xlabel("Time (s)")
+plt.show()
+
+plt.plot(t,unfiltered_ecg)
+plt.title(title)
 plt.ylabel("ECG (mV)")
 plt.xlabel("Time (s)")
 plt.show()
